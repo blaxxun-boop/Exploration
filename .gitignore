@@ -1,0 +1,6 @@
+bin
+obj
+/packages
+Exploration.sln.DotSettings.user
+.idea
+.vs
