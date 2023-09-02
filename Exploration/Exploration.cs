@@ -18,7 +18,7 @@ namespace Exploration;
 public class Exploration : BaseUnityPlugin
 {
 	private const string ModName = "Exploration";
-	private const string ModVersion = "1.0.0";
+	private const string ModVersion = "1.0.1";
 	private const string ModGUID = "org.bepinex.plugins.exploration";
 
 	private static readonly ConfigSync configSync = new(ModName) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
@@ -94,10 +94,33 @@ public class Exploration : BaseUnityPlugin
 	[HarmonyPatch(typeof(Minimap), nameof(Minimap.Explore), typeof(Vector3), typeof(float))]
 	private class IncreaseExplorationRadius
 	{
+		public static int exploredPixels = 0;
+		
 		[UsedImplicitly]
 		private static void Prefix(Minimap __instance, ref float radius)
 		{
+			exploredPixels = 0;
 			radius *= 1 + Player.m_localPlayer.GetSkillFactor("Exploration") * (explorationRadiusIncrease.Value / 100f);
+		}
+
+		private static void Postfix()
+		{
+			if (exploredPixels > 0 && Player.m_localPlayer)
+			{
+				Player.m_localPlayer.RaiseSkill("Exploration", 0.075f * exploredPixels);
+			}
+		}
+	}
+
+	[HarmonyPatch(typeof(Minimap), nameof(Minimap.Explore), typeof(int), typeof(int))]
+	private static class IncreaseExplorationSkill
+	{
+		private static void Postfix(bool __result)
+		{
+			if (__result)
+			{
+				++IncreaseExplorationRadius.exploredPixels;
+			}
 		}
 	}
 
@@ -119,17 +142,6 @@ public class Exploration : BaseUnityPlugin
 		}
 	}
 
-	[HarmonyPatch(typeof(Minimap), nameof(Minimap.Explore), typeof(int), typeof(int))]
-	private static class IncreaseExplorationSkill
-	{
-		private static void Postfix(bool __result)
-		{
-			if (Player.m_localPlayer && __result)
-			{
-				Player.m_localPlayer.RaiseSkill("Exploration", 0.075f);
-			}
-		}
-	}
 
 	[HarmonyPatch(typeof(MapTable), nameof(MapTable.OnWrite))]
 	private static class PreventMapTableUsageWrite
