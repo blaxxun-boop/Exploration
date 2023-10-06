@@ -18,7 +18,7 @@ namespace Exploration;
 public class Exploration : BaseUnityPlugin
 {
 	private const string ModName = "Exploration";
-	private const string ModVersion = "1.0.1";
+	private const string ModVersion = "1.0.2";
 	private const string ModGUID = "org.bepinex.plugins.exploration";
 
 	private static readonly ConfigSync configSync = new(ModName) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
@@ -95,7 +95,7 @@ public class Exploration : BaseUnityPlugin
 	private class IncreaseExplorationRadius
 	{
 		public static int exploredPixels = 0;
-		
+
 		[UsedImplicitly]
 		private static void Prefix(Minimap __instance, ref float radius)
 		{
