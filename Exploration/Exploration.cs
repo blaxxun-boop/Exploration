@@ -18,7 +18,7 @@ namespace Exploration;
 public class Exploration : BaseUnityPlugin
 {
 	private const string ModName = "Exploration";
-	private const string ModVersion = "1.0.2";
+	private const string ModVersion = "1.0.3";
 	private const string ModGUID = "org.bepinex.plugins.exploration";
 
 	private static readonly ConfigSync configSync = new(ModName) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
@@ -149,7 +149,7 @@ public class Exploration : BaseUnityPlugin
 		private static bool Prefix() => requiredLevelWrite.Value <= 0 || !(Player.m_localPlayer.GetSkillFactor("Exploration") < requiredLevelWrite.Value / 100f);
 	}
 
-	[HarmonyPatch(typeof(MapTable), nameof(MapTable.OnRead))]
+	[HarmonyPatch(typeof(MapTable), nameof(MapTable.OnRead), typeof(Switch), typeof(Humanoid), typeof(ItemDrop.ItemData), typeof(bool))]
 	private static class PreventMapTableUsageRead
 	{
 		private static bool Prefix() => requiredLevelRead.Value <= 0 || !(Player.m_localPlayer.GetSkillFactor("Exploration") < requiredLevelRead.Value / 100f);
