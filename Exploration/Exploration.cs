@@ -179,7 +179,7 @@ public class Exploration : BaseUnityPlugin
 		}
 	}
 
-	[HarmonyPatch(typeof(Container), nameof(Container.RPC_OpenRespons))]
+	[HarmonyPatch(typeof(Container), nameof(Container.RPC_OpenResponse))]
 	private static class MultiplyTreasure
 	{
 		private static void Prefix(Container __instance, bool granted)
