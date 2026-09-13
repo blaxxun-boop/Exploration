@@ -9,7 +9,7 @@
         <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>Exploration</RootNamespace>
         <AssemblyName>Exploration</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>

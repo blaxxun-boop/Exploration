@@ -18,7 +18,7 @@ namespace Exploration;
 public class Exploration : BaseUnityPlugin
 {
 	private const string ModName = "Exploration";
-	private const string ModVersion = "1.0.4";
+	private const string ModVersion = "1.0.5";
 	private const string ModGUID = "org.bepinex.plugins.exploration";
 
 	private static readonly ConfigSync configSync = new(ModName) { DisplayName = ModName, CurrentVersion = ModVersion, MinimumRequiredVersion = ModVersion };
@@ -179,7 +179,7 @@ public class Exploration : BaseUnityPlugin
 		}
 	}
 
-	[HarmonyPatch(typeof(Container), nameof(Container.RPC_OpenRespons))]
+	[HarmonyPatch(typeof(Container), nameof(Container.RPC_OpenResponse))]
 	private static class MultiplyTreasure
 	{
 		private static void Prefix(Container __instance, bool granted)
